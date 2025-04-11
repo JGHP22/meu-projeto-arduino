@@ -6,15 +6,21 @@ void setup()
 {
   // put your setup code here, to run once:
   pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Digite 'ON' para ligar o LED:");
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
+  if (Serial.available() > 0){
+    String command = Serial.readStringUntil('\n');
+    command.trim();
+    if(command.equalsIgnoreCase("ON")){
+      digitalWrite(LED_BUILTIN, HIGH);
+    Serial.println("LED LIGADO");
+    delay(2000);
+    digitalWrite(LED_BUILTIN, LOW);
+    }
+  }
 }
-
 // put function definitions here:
